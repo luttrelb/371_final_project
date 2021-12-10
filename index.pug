@@ -1,7 +1,0 @@
-extends layout
-
-block content
-	if user != null
-		h1 Welcome, #{user.email}
-	else
-		include ./login.pug
