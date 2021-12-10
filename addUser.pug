@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	h1 Add a New User
+
+	form(action="/users" method="post")
+	
+		label(for='username'): b Email:
+		input(type='text' name='username')
+
+		label(for='password'): b New Password:
+		input(type='text' name='password')
+
+		label(for='admin'): b Is this user an Admin?:
+		input(type='text' name='admin')
+		
+		button(type='submit') Submit
