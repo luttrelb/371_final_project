@@ -9,10 +9,10 @@ var validPassword = require('./users.js').validPassword;
 
 passport.use(new LocalStrategy(
   function(username, password, done){ 
-    User.findOne({email: username }, function(err, user){
-      if(err) { console.log("ERROR"); return done(err); }
-      if(!user) {console.log("NO USER"); return done(null, false); }
-      if(!validPassword(password, user.salt, user.password)){ console.log("BAD PASSWORD"); return done(null, false); }
+    User.findOne({username: username }, function(err, user){
+      if(err) { return done(err); }
+      if(!user) { return done(null, false); }
+      if(!validPassword(password, user.salt, user.password)){ return done(null, false); }
       return done(null, user);
     }
    )
@@ -33,24 +33,22 @@ router.get('/about', function(req, res, next){
   res.render('about', { title: 'About MyJournal'});
 });
 
-router.post('/login', checkAuthLocal, function(req, res, next){
-  res.redirect('/');
+router.post('/login', function(req, res, next){
+  if(!req.isAuthenticated()){
+    res.redirect('/');
+  }
 });
 
-//add user route
 router.get('/addUser', function(req, res, next){
-  
-  if (!req.user) {
-    return res.redirect('/')
+  if(!req.isAuthenticated()){
+    res.redirect('/')
   }
-
   if(req.user.admin){
-	  res.render('addUser');
+	res.render('addUser');
   } else {
-	  res.render('index');
+	res.render('index');
   }
 });
-
 
 router.get('/logout', function(req, res){
 	req.logout();
