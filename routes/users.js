@@ -125,7 +125,7 @@ router.get('/', checkAuth, async function(req, res, next) {
  * This function may be used by an administrator, or by a user
  * ONLY IF they are asking for their own information.
  */
-router.get('/:userId', checkAuth, async function(req, res, next){
+router.get('/delete', checkAuth, async function(req, res, next){
 	if(req.user.admin || req.user._id == req.params.userId){
 		var user = await User.findOne({ _id : req.params.userId });
 		res.json(user);
@@ -157,5 +157,18 @@ router.post('/', checkAuth, async function(req, res, next){
 		throw error;
         }
 });
+
+// localhost:3000/users/delete
+router.post('/delete', async function(req, res, next) {
+	if (!req.user) {
+		// handle unauth
+	}
+	let user = await User.findByIdAndDelete(req.body.userId)
+
+	if (user) {
+		// was there a user to be deleted
+	}
+	// otherwise what if that user didnt exist
+})
 
 module.exports = { checkAuth, router, User, validPassword };
