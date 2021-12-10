@@ -33,7 +33,7 @@ router.get('/about', function(req, res, next){
   res.render('about', { title: 'About MyJournal'});
 });
 
-router.post('/login', checkAuthLocal, function(req, res, next){
+router.post('/login', checkAuthLocal, function(req, res, next){ //req.isAuthenticated
   res.redirect('/');
 });
 
