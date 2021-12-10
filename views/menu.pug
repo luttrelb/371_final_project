@@ -4,5 +4,8 @@ menu.menu
   li: a(href='/') Home
   li: a(href='/journal') Journal
   li: a(href='/about') About
+  if user !=null && user.admin == true  
+    li: a(href='/addUser') Add User
   if user != null
     li: a(href='/logout') Log Out
+  
